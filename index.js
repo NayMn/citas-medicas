@@ -7,6 +7,7 @@ import chalk from 'chalk'
 
 const app = express()
 
+const usuarios = []
 
 // obtener un usuario cualquiera: 
 const randomUsuario = async () => {
@@ -16,6 +17,7 @@ const randomUsuario = async () => {
         return {
             id: uuidv4(),
             name: `${dataUsuario.name}`,
+            email: dataUsuario.email,
             gender: dataUsuario.gender,
             timestamp: moment().format('YYYY-MM-DD HH:mm:ss')
         }
@@ -23,7 +25,19 @@ const randomUsuario = async () => {
 }
 randomUsuario()
 
-console.log(randomUsuario())
+// registrar un nuevo usuario: 
+
+app.get('/registrar', async (req, res) => {
+    try {
+        const usuarioNuevo = await randomUsuario();
+        usuarios.push(usuarioNuevo)
+        res.json(usuarioNuevo)
+    } catch (error) {
+        res.status(500).json({ error: 'error no se puede registrar el usuario' })
+    }
+})
+
+
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
