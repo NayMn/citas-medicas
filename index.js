@@ -1,11 +1,13 @@
 import express from 'express'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
+import moment from 'moment'
+import _ from 'lodash'
+import chalk from 'chalk'
+
+
 
 const app = express()
-
-app.get('/', (req, res) => {
-    res.send('titulo pagina princpal')
-})
 
 const randomInfo = async () => {
     try {
